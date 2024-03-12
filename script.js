@@ -36,7 +36,7 @@ function navigate(page) {
         renderHoldingsPage();
     }
 }
-// reduction in ballance, allerrt , prompt, creation of holdings, 
+// reduction in ballance, allert , prompt, creation of holdings, 
 function renderHomePage() {
     const homePage = document.getElementById('homePage');
     homePage.innerHTML = '';
@@ -117,7 +117,7 @@ function renderWishlistPage() {
                     }
                     alert(`You have successfully purchased ${amount} ${token} tokens.`);
                     wishlist = wishlist.filter(item => item !== token);
-                    document.getElementById('balance').textContent = `Balance: ${balance}`;
+                    document.getElementById('balance').textContent = `Balance:$${balance}`;
                     renderHoldingsPage();
                     renderWishlistPage();
                 } else {
@@ -167,8 +167,10 @@ function renderHoldingsPage() {
             const randomProfitLoss = getRandomProfitLoss();
             profitLoss.textContent = `Profit/Loss: ${randomProfitLoss}`;
             
-            // Set color based on profit or loss
+            // Set color based on profit or loss.
             profitLoss.style.color = randomProfitLoss >= 0 ? 'green' : 'red';
+            profitLoss.textContent =  profitLoss.style.color = 'green' ? `Profit:$${randomProfitLoss}` : `Loss:$${randomProfitLoss}`;
+
 
             card.appendChild(name);
             card.appendChild(quantity);
