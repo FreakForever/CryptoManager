@@ -36,6 +36,7 @@ function navigate(page) {
         renderHoldingsPage();
     }
 }
+// reduction in ballance, allerrt , prompt, creation of holdings, 
 function renderHomePage() {
     const homePage = document.getElementById('homePage');
     homePage.innerHTML = '';
@@ -57,6 +58,7 @@ function renderHomePage() {
                 } else {
                     holdings[token] = amount;
                 }
+                // After creating an object giving an alert ...
                 alert(`You have successfully purchased ${amount} ${token} tokens.`);
                 document.getElementById('balance').textContent = `Balance: ${balance}`;
                 renderHoldingsPage();
@@ -83,6 +85,7 @@ function renderHomePage() {
         card.appendChild(wishlistBtn);
         homePage.appendChild(card);
     });
+
 }
 function renderWishlistPage() {
     const wishlistPage = document.getElementById('wishlistPage');
@@ -132,3 +135,50 @@ function renderWishlistPage() {
     }
 }
 navigate('home');
+function renderHoldingsPage() {
+    const holdingsPage = document.getElementById('holdingsPage');
+    holdingsPage.innerHTML = '';
+
+    if (Object.keys(holdings).length === 0) {
+        holdingsPage.textContent = 'No Holdings.';
+    } else {
+        Object.keys(holdings).forEach(token => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            const name = document.createElement('p');
+            name.textContent = token;
+            const quantity = document.createElement('p');
+            quantity.textContent = `Quantity: ${holdings[token]}`;
+            const sellBtn = document.createElement('button');
+            sellBtn.textContent = 'Sell';
+            sellBtn.addEventListener('click', () => {
+                const amount = parseInt(prompt(`How many ${token} tokens do you want to sell?`));
+                if (!isNaN(amount) && amount > 0 && holdings[token] >= amount) {
+                    balance += amount * cryptoData[token];
+                    holdings[token] -= amount;
+                    alert(`You have successfully sold ${amount} ${token} tokens.`);
+                    document.getElementById('balance').textContent = `Balance: ${balance}`;
+                    renderHoldingsPage();
+                } else {
+                    alert('Invalid input or insufficient holdings.');
+                }
+            });
+            const profitLoss = document.createElement('p');
+            const randomProfitLoss = getRandomProfitLoss();
+            profitLoss.textContent = `Profit/Loss: ${randomProfitLoss}`;
+            
+            // Set color based on profit or loss
+            profitLoss.style.color = randomProfitLoss >= 0 ? 'green' : 'red';
+
+            card.appendChild(name);
+            card.appendChild(quantity);
+            card.appendChild(sellBtn);
+            card.appendChild(profitLoss);
+            holdingsPage.appendChild(card);
+        });
+    }
+}
+function getRandomProfitLoss(){
+    return Math.floor(Math.random()*1001) - 500;
+}
+
