@@ -58,7 +58,7 @@ function renderHomePage() {
                 } else {
                     holdings[token] = amount;
                 }
-                // After creating an object giving an alert ...
+                // After creating an object giving an alert ....
                 alert(`You have successfully purchased ${amount} ${token} tokens.`);
                 document.getElementById('balance').textContent = `Balance: ${balance}`;
                 renderHoldingsPage();
@@ -134,7 +134,7 @@ function renderWishlistPage() {
         });
     }
 }
-navigate('home');
+
 function renderHoldingsPage() {
     const holdingsPage = document.getElementById('holdingsPage');
     holdingsPage.innerHTML = '';
