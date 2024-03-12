@@ -46,7 +46,7 @@ function renderHomePage() {
         const name = document.createElement('p');
         name.textContent = token;
         const price = document.createElement('p');
-        price.textContent = `${cryptoData[token]}`;
+        price.textContent = `$${cryptoData[token]}`;
         const purchaseBtn = document.createElement('button');
         purchaseBtn.textContent = 'Purchase';
         purchaseBtn.addEventListener('click', () => {
@@ -69,6 +69,7 @@ function renderHomePage() {
         const wishlistBtn = document.createElement('button');
         wishlistBtn.textContent = 'Add to Wishlist';
         wishlistBtn.addEventListener('click', () => {
+            // checking whether the key exists or not inside the array..
             if (!wishlist.includes(token)) {
                 wishlist.push(token);
                 alert('Successfully added to your wishlist.');
@@ -89,6 +90,7 @@ function renderHomePage() {
 }
 function renderWishlistPage() {
     const wishlistPage = document.getElementById('wishlistPage');
+    // emptying after remove btn is pressed.. 
     wishlistPage.innerHTML = '';
     if (wishlist.length === 0) {
         wishlistPage.textContent = 'Wishlist is empty.';
@@ -118,6 +120,7 @@ function renderWishlistPage() {
                     alert(`You have successfully purchased ${amount} ${token} tokens.`);
                     wishlist = wishlist.filter(item => item !== token);
                     document.getElementById('balance').textContent = `Balance:$${balance}`;
+                    // inorder to create next block.. in the respective pages..
                     renderHoldingsPage();
                     renderWishlistPage();
                 } else {
@@ -152,9 +155,11 @@ function renderHoldingsPage() {
             const sellBtn = document.createElement('button');
             sellBtn.textContent = 'Sell';
             sellBtn.addEventListener('click', () => {
+                // this will get the number of crypto to be sold out..
                 const amount = parseInt(prompt(`How many ${token} tokens do you want to sell?`));
                 if (!isNaN(amount) && amount > 0 && holdings[token] >= amount) {
                     balance += amount * cryptoData[token];
+                    // reducing the holding amount..
                     holdings[token] -= amount;
                     alert(`You have successfully sold ${amount} ${token} tokens.`);
                     document.getElementById('balance').textContent = `Balance: ${balance}`;
@@ -180,7 +185,9 @@ function renderHoldingsPage() {
         });
     }
 }
+// creating random profit/loss within -500 to 500:
 function getRandomProfitLoss(){
     return Math.floor(Math.random()*1001) - 500;
 }
+navigate('home')
 
